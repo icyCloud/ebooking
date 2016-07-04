@@ -1,0 +1,14 @@
+tornado
+sqlalchemy
+mako
+MySQL-python
+PyMySQL
+celery
+tornado-celery
+python-dateutil
+gevent
+simplejson
+librabbitmq
+requests==2.5.1
+futures=3.0.2
+xlwt

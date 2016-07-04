@@ -1,0 +1,221 @@
+<%!
+    from constants import PERMISSIONS
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:ng="http://angularjs.org">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+        <meta name="renderer" content="webkit"> 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+        <title>商旅分销管理系统</title>
+
+        <script>
+        if (window.location.host == "ebooking.betterwood.com") {
+            var _hmt = _hmt || [];
+            (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?bdfdf5e780c80fff1d6d3a1f708d0032";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+            })();
+        } else if (window.location.host == "ebookingtest.betterwood.com") {
+
+            var _hmt = _hmt || [];
+            (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?385000e2adcc281fc566e9e409bb69ec";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+            })();
+
+        }
+        </script>
+
+		<script>
+			var merchantId = ${user.merchant_id};
+		</script>
+        <link rel="stylesheet" type="text/css" href="${static_url('css/bootstrap.min.css')}">
+
+        <link href="${static_url('css/default.css')}" rel="stylesheet" type="text/css" >
+        <link href="${static_url('css/mod.css')}" rel="stylesheet" type="text/css" >
+		<script src="${static_url('js/angular.js')}"></script>
+        <script src="${static_url('js/md5.js')}"></script>
+
+        <script src="${static_url('js/conLogService.js')}"></script>
+        
+        <link href="${static_url('image/icon.ico')}" rel="SHORTCUT ICON">
+
+
+    </head>
+    <body>
+        <div class="wrapper">
+            <!--页头部分-->   
+            <div class="header"><div class="auto">
+
+                    <!--顶部用户信息-->  
+                    <div class="admin-info">
+                        <div class="fl">
+                            <img src="${static_url('image/bg-admin.png')}" width="80" height="80" class="img3"/>
+                            <img src="${static_url('image/admin-head.jpg')}" class="img-head"/>
+                        </div>
+                        <div class="fr">
+                            欢迎回来！<br/>
+							<strong id="userNameCheck">${user.username}</strong>
+                        </div>
+                    </div>
+
+                    <div class="person-menu">
+                        <ul>
+							% if user.username in ['admin', 'root']:
+                            <li class="icon-admin"><a href="/userManage/" target="_blank">用户管理</a></li>
+							% endif
+                            <li class="icon-password"><a href="/password/" target="_blank">修改密码</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="left">
+                        <img src="${static_url('image/logo-sys.png')}" width="250" height="50" alt="旅行社分销管理系统" class="img1"/>
+                    </div>
+
+                    <div class="right">
+                        <ul class="right-menu">
+                            <li class="icon-out"><a href="javascript:void(0)" id="out-btn">退出系统</a></li>
+                            <li id="qqOnline" class="icon-contact" style="position:relative">
+
+                                <div  class="qq" id="qqContact">
+                                    <div class="borderdis"></div>
+                                    <div class="qqcontracter" style="padding-top:10px">
+                                        <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2106806514&site=qq&menu=yes">
+                                            <img src="${static_url('image/qq_contact.png')}">
+                                        </a>
+                                        <span>旅行社合作客服  沐沐</span>
+                                    </div>
+                                    <div class="qqcontracter">
+                                        <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2731202307&site=qq&menu=yes">
+                                            <img src="${static_url('image/qq_contact.png')}">
+                                        </a>
+                                        <span>旅行社合作客服 cici</span>
+                                    </div>
+                                    <div class="qqcontracter">
+                                        <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2824471995&site=qq&menu=yes">
+                                            <img src="${static_url('image/qq_contact.png')}">
+                                        </a>
+                                        <span>单体合作酒店客服 静静</span>
+                                    </div>
+                
+                                </div> 
+
+                                <a href="#" alt="在线QQ联系我们" title="在线QQ联系我们">在线客服</a></li>  
+                            <li class="icon-guide"><a href="javascript:void(0)" id="guide-btn">新手引导</a></li>
+                            <li id="qrcode">
+                                <a href="javascript:void(0)" id="guide-btn">官方微信</a>
+                            </li>   
+                        </ul>
+                    </div>
+
+            </div></div>
+            <!--页头部分end--> 
+
+             
+
+
+            <!--左侧部分-->  
+            <div class="main-left">
+
+                <!--左侧菜单-->   
+                <div class="left-menu">
+                    <dl class="menu1" style="margin-bottom:0px;">
+                        <dt><u class="icon-dt"></u>订单管理</dt>
+                        <dd><a href="/order/waiting/"><u class="icon1"></u>待确认订单<b id="orderPoint" class="has-order">·</b></a></dd>
+                        <dd><a href="/order/list"><u class="icon2"></u>订单查询</a></dd>
+
+                    </dl>
+
+                    <dl class="menu2" style="margin-bottom:0px;">       
+                        <dt><u class="icon-dt"></u>合作酒店管理</dt>
+                        <dd><a href="/hotel/cooped/"><u class="icon4"></u>已合作酒店</a></dd>
+						% if ((current_user.authority & PERMISSIONS.choose_hotel or current_user.type == current_user.TYPE_ADMIN) and (merchant.type == merchant.TYPE_TRAVEL_AGENCY)) or user.type == user.TYPE_ROOT:
+                        <dd><a href="/hotel/willcoop/"><u class="icon5"></u>可合作酒店</a></dd>                
+						% endif
+                    </dl>
+
+                    % if current_user.type != current_user.TYPE_SUB:
+                    <dl class="menu3" style="margin-bottom:0px;">
+                        <dt><u class="icon-dt"></u>数据统计</dt>
+                        <dd><a href="/static/java/html/orderAnalyse.html?v=20150611"><u class="icon3"></u>订单统计</a></dd>
+                        <!--<dd><a href="#"><u class="icon3"></u>间夜统计</a></dd>-->
+                    </dl>
+                    % endif
+
+                    % if current_user.authority & PERMISSIONS.income_statistics or current_user.type == current_user.TYPE_ADMIN or current_user.type == current_user.TYPE_ROOT:
+                    <dl class="menu4" style="margin-bottom:0px;">
+                        <dt><u class="icon-dt"></u>财务统计</dt>
+                        <dd><a href="/finance/prepay/"><u class="icon3"></u>预付结算</a></dd>
+                        <dd><a href="/finance/agency/"><u class="icon3"></u>现付结算</a></dd>
+                        <dd><a href="/contract/"><u class="icon3"></u>合同管理</a></dd>
+                    </dl>
+                    % endif
+
+
+
+                </div>
+                <!--左侧菜单end-->
+            </div>
+            <!--左侧部分end--> 
+
+            <!--右侧部分--> 
+            <div class="main-right">
+                ${self.right_content()}
+            </div>
+            <!--右侧部分end--> 
+        </div>
+
+        <!--新手引导浮层-->     
+        <div class="messageDiv" id="guide-div" style=" display:none">
+            <div class="messageBlack"></div>
+            <div class="detail guide-div">
+                <div class="head"><h1>新手引导</h1></div>
+                <p id="closeDiv" class="close" href="#">X</p>
+                <div class="con">
+                    <p class="f16" style=" text-align:center;padding:30px 0;">如果你是首次登录的用户，请按以下步骤操作：</p>
+                    <p  style=" text-align:center">
+
+					<img src="${static_url('image/contral-step.jpg')}" width="331" height="264" />          
+                    </p>
+                </div>
+            </div> 
+        </div>   
+
+    </div>   
+    <!--新手引导浮层结束-->  
+
+
+    <!--退出登录浮层-->     
+    <div class="messageDiv" id="out-div" style=" display:none">
+        <div class="messageBlack"></div>
+        <div class="detail">
+            <div class="head"><h1>提示</h1></div>       
+            <div class="con">
+                <p class="f16" style=" text-align:center;padding:30px 0;">你确认要退出吗？</p>
+                <p class="action" style=" text-align:center">
+                    <input name="确定" type="button" value="确定" id="sure-out"/>
+                    <input name="取消" type="button" value="取消" class="btn-bai" id="no-out" />
+                </p>
+            </div>
+        </div> 
+    </div>   
+    <!--退出登录弹窗浮层结束-->  
+	<script src="${static_url('js/jquery1.9.1.js')}"></script>
+	<script src="${static_url('js/common.js')}"></script>
+
+	${self.end()}
+</body>
+</html>
+
+<%def name="right_content()">
+</%def>
+
+<%def name="end()">
+</%def>
